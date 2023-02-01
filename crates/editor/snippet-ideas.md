@@ -83,7 +83,7 @@ Snippets are inserted based on type of value on which the cursor is located.
 - command: evaluate predicate for all in slice/list/array
 - command: get element at index
 - command: get char at index
-- command: reverse stirng
+- command: reverse string
 - command: lambda/anonymous function
 - we should auto create type hole commands for all builtins.
   - example: List has builtins reverse, repeat, len... generated snippet commands should be:

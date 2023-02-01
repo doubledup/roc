@@ -202,7 +202,7 @@ e.g. you have a test `calculate_sum_test` that only uses the function `add`, whe
 - Show most commonly changed settings on first run so new users can quickly customize their experience. Keeping record of changed settings should be opt-in.
 - Detection of multiple people within same company/team working on same code at the same time (opt-in).
 - Autocorrect likely typos for stuff like `-<` when not in string.
-- If multiple functions are available for import, use function were types would match in insetion position.
+- If multiple functions are available for import, use function were types would match in insertion position.
 - Recommend imports based on imports in other files in same project.
 - Machine Learning model to determine confidence in a possiblte auto import. Automatically add the importt if confidence is very high.
 - Ability to print logs in different color depending on which file they come from.

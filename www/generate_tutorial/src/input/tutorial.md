@@ -332,12 +332,12 @@ The `addAndStringify` function will accept any record with at least the fields `
 <pre><samp><span>total <span class="kw">=</span> addAndStringify <span class="brace">{</span> birds: 5<span class="comma">,</span> iguanas: 7 <span class="brace">}</span>
 </span>
 <span class="comment"># The `name` field is unused by addAndStringify</span>
-totalWithNote <span class="kw">=</span> addAndStringify <span class="brace">{</span> birds: 4<span class="comma">,</span> iguanas: 3<span class="comma">,</span> name: <span class="str">"Whee!"</span> <span class="brace">}</span>
+totalWithName <span class="kw">=</span> addAndStringify <span class="brace">{</span> birds: 4<span class="comma">,</span> iguanas: 3<span class="comma">,</span> name: <span class="str">"Whee!"</span> <span class="brace">}</span>
 
 <span>addAndStringify <span class="kw">=</span> <span class="kw">\</span>counts <span class="kw">-></span>
     Num.toStr <span class="paren">(</span>counts.birds <span class="op">+</span> counts.iguanas<span class="paren">)</span></span></samp></pre>
 
-This works because `addAndStringify` only uses `counts.birds` and `counts.iguanas`. If we were to use `counts.note` inside `addAndStringify`, then we would get an error because `total` is calling `addAndStringify` passing a record that doesn't have a `note` field.
+This works because `addAndStringify` only uses `counts.birds` and `counts.iguanas`. If we were to use `counts.name` inside `addAndStringify`, then we would get an error because `total` is calling `addAndStringify` passing a record that doesn't have a `name` field.
 
 ### [Record shorthands](#record-shorthands) {#record-shorthands}
 
@@ -383,7 +383,7 @@ Finally, destructuring can be used in defs too:
 
 ### [Making records from other records](#making-records-from-other-records) {#making-records-from-other-records}
 
-So far we've only constructed records from scratch, by specifying all of their fields. We can also construct new records by using another record to use as a starting point, and then specifying only the fields we want to be different. For example, here are two ways to get the same record:
+So far we've only constructed records from scratch, by specifying all of their fields. We can also construct new records by using another record as a starting point, and then specifying only the fields we want to be different. For example, here are two ways to get the same record:
 
 <pre><samp>original <span class="kw">=</span> <span class="brace">{</span> birds: 5<span class="comma">,</span> zebras <span class="colon">:</span> 2<span class="comma">,</span> iguanas <span class="colon">:</span> 7<span class="comma">,</span> goats <span class="colon">:</span> 1 <span class="brace">}</span>
 fromScratch <span class="kw">=</span> <span class="brace">{</span> birds <span class="colon">:</span> 4<span class="comma">,</span> zebras <span class="colon">:</span> 2<span class="comma">,</span> iguanas <span class="colon">:</span> 3<span class="comma">,</span> goats <span class="colon">:</span> 1 <span class="brace">}</span>
@@ -797,7 +797,7 @@ Note that the initial `state` argument is `{ evens: [], odds: [] }` because that
 we passed `List.walk` for its initial state. From then on, each `state` argument is whatever the
 previous function call returned.
 
-Once the list has run out of elements, `List.walk` retunrs whatever the final function call returned—in this case, `{ evens : [2, 4], odds : [1, 3, 5] }`. (If the list was empty, the function never gets called and `List.walk` returns the initial state.)
+Once the list has run out of elements, `List.walk` returns whatever the final function call returned—in this case, `{ evens : [2, 4], odds : [1, 3, 5] }`. (If the list was empty, the function never gets called and `List.walk` returns the initial state.)
 
 Note that the state doesn't have to be a record; it can be anything you want. For example, if you made it a `Bool`, you could implement `List.any` using `List.walk`. You could also make the state be a list, and implement `List.map`, `List.keepIf`, or `List.dropIf`. There are a lot of things you can do with `List.walk`!
 
@@ -958,7 +958,7 @@ You can tell some interesting things about functions based on the type parameter
 
 Similarly, the only way to have a function whose type is `a -> a` is if the function's implementation returns its argument without modifying it in any way. This is known as [the identity function](https://en.wikipedia.org/wiki/Identity_function).
 
-### [Tag Union Types](#tag-union-tyes) {#tag-union-tyes}
+### [Tag Union Types](#tag-union-types) {#tag-union-types}
 
 We can also annotate types that include tags:
 
@@ -1027,7 +1027,7 @@ Following this pattern, the 16 in `I16` means that it's a signed 16-bit integer.
 Choosing a size depends on your performance needs and the range of numbers you want to represent. Consider:
 
 - Larger integer sizes can represent a wider range of numbers. If you absolutely need to represent numbers in a certain range, make sure to pick an integer size that can hold them!
-- Smaller integer sizes take up less memory. These savings rarely matters in variables and function arguments, but the sizes of integers that you use in data structures can add up. This can also affect whether those data structures fit in [cache lines](https://en.wikipedia.org/wiki/CPU_cache#Cache_performance), which can easily be a performance bottleneck.
+- Smaller integer sizes take up less memory. These savings rarely matter in variables and function arguments, but the sizes of integers that you use in data structures can add up. This can also affect whether those data structures fit in [cache lines](https://en.wikipedia.org/wiki/CPU_cache#Cache_performance), which can easily be a performance bottleneck.
 - Certain processors work faster on some numeric sizes than others. There isn't even a general rule like "larger numeric sizes run slower" (or the reverse, for that matter) that applies to all processors. In fact, if the CPU is taking too long to run numeric calculations, you may find a performance improvement by experimenting with numeric sizes that are larger than otherwise necessary. However, in practice, doing this typically degrades overall performance, so be careful to measure properly!
 
 Here are the different fixed-size integer types that Roc supports:
