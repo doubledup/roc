@@ -19,13 +19,13 @@ Install nix (not necessary on NixOS):
 - If you are using WSL (Windows subsystem for Linux):
 
 ```sh
-sh <(curl -L https://nixos.org/nix/install) --no-daemon
+curl -L https://nixos.org/nix/install | sh -s -- --no-daemon
 ```
 
 - For everything else:
 
 ```sh
-sh <(curl -L https://nixos.org/nix/install) --daemon
+curl -L https://nixos.org/nix/install | sh -s -- --daemon
 ```
 
 Open a new terminal and edit either `~/.config/nix/nix.conf` or `/etc/nix/nix.conf` and add:
