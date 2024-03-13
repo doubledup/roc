@@ -1,7 +1,7 @@
 //! Semantic representations of memory layouts for the purposes of specialization.
 
 use bumpalo::Bump;
-use roc_module::symbol::Symbol;
+use roc_module::symbol::{Interns, Symbol};
 
 /// A semantic representation of a memory layout.
 /// Semantic representations describe the shape of a type a [Layout][super::Layout] is generated
@@ -17,19 +17,36 @@ impl<'a> std::fmt::Debug for SemanticRepr<'a> {
 }
 
 impl<'a> SemanticRepr<'a> {
-    fn to_str(&self, arena: &'a Bump) -> &'a str {
+    const FIELD_SEPARATOR: &str = ",";
+
+    fn to_str(&self, arena: &'a Bump, interns: &Interns) -> &'a str {
         let todo = (); // TODO do some test cases that start with real code and then we see what
                        // the reprs are
         let todo = (); // TODO what do we name the field accessor for .foo or whatever?
         let todo = (); // TODO we might need to retain aliases, so that e.g. Model doesn't get
                        // expanded into a giant string with a gazillion fields
 
+        let to_str_inner = |arena: &'a Bump, fields: &[&str]| {
+            arena.alloc_str(fields.join(SemanticRepr::FIELD_SEPARATOR).as_str())
+        };
+
         match self.0 {
-            Inner::None => todo!(),
-            Inner::Record(_) => todo!(),
-            Inner::Tuple(_) => todo!(),
-            Inner::TagUnion(_) => todo!(),
-            Inner::Lambdas(_) => todo!(),
+            Inner::None => "",
+            Inner::Record(SemaRecord { fields }) => {
+                to_str_inner(arena, fields)
+            }
+            Inner::Tuple(SemaTuple{ size }) => {
+                let tuple_field_strings: Vec<String> = (0..size).map(|i| i.to_string()).collect();
+                let tuple_field_slices: Vec<&str> = tuple_field_strings.iter().map(|s| s.as_ref()).collect();
+                to_str_inner(arena, tuple_field_slices.as_slice())
+            }
+            Inner::TagUnion(SemaTagUnion { tags }) => {
+                to_str_inner(arena, tags)
+            },
+            Inner::Lambdas(SemaLambdas { lambdas }) => {
+                let lambda_symbol_slices: Vec<&str> = lambdas.iter().map(|l| l.as_str(interns)).collect();
+                to_str_inner(arena, lambda_symbol_slices.as_slice())
+            },
         }
     }
 
