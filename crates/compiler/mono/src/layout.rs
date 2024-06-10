@@ -760,7 +760,7 @@ pub enum UnionLayout<'a> {
     /// e.g. `ConsList a : [Nil, Cons a (ConsList a)]`
     ///
     /// nullable_id is a bool because it's only ever 0 or 1, but (as with the NullableWrapped
-    /// variant), it reprsents the index of the tag that will be represented at runtime as NULL.
+    /// variant), it represents the index of the tag that will be represented at runtime as NULL.
     ///
     /// So for example, in `ConsList a : [Nil, Cons a (ConsList a)]`, Nil is tag id 1 and
     /// Cons is tag id 0 because Nil comes alphabetically after Cons. Here, Nil will be

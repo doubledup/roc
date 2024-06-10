@@ -1890,7 +1890,7 @@ capitalizeNames : User a -> User a
 
 If this function does a record update on the given user, and returns that - for example, if its definition were `capitalizeNames = \user -> { user & email: "blah" }` - then it needs to use the same named type variable for both the argument and return value.
 
-However, if returns a new `User` that it created from scratch, then its type could instead be:
+However, if it returns a new `User` that it created from scratch, then its type could instead be:
 
 ```roc
 capitalizeNames : User * -> User {}
